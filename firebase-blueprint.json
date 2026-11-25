@@ -1,0 +1,187 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated educational user profile isolated to the owning user.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID matching document ID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Verified account email address.",
+          "maxLength": 160
+        },
+        "role": {
+          "type": "string",
+          "enum": ["learner"],
+          "description": "Fixed non-privileged learner role on self-registration."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when profile was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when profile was last updated."
+        }
+      },
+      "required": ["uid", "displayName", "email", "role", "createdAt", "updatedAt"]
+    },
+    "PredictionRecord": {
+      "title": "PredictionRecord",
+      "description": "Educational disease simulation run stored separately per user.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "diseaseId": {
+          "type": "string",
+          "enum": ["heart", "diabetes", "breast-cancer"]
+        },
+        "predictedClass": {
+          "type": "integer"
+        },
+        "predictedLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "probability": {
+          "type": "number"
+        },
+        "riskTier": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "source": {
+          "type": "string",
+          "enum": ["educational_demo_simulator", "python_sklearn_api"]
+        },
+        "isTrainedModel": {
+          "type": "boolean"
+        },
+        "inputsSummary": {
+          "type": "object"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "diseaseId",
+        "predictedClass",
+        "predictedLabel",
+        "probability",
+        "riskTier",
+        "source",
+        "isTrainedModel",
+        "inputsSummary",
+        "createdAt"
+      ]
+    },
+    "FeedbackEntry": {
+      "title": "FeedbackEntry",
+      "description": "User-submitted comments, suggestions, or issue reports stored for review.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userDisplayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "category": {
+          "type": "string",
+          "enum": ["comment", "suggestion", "issue"]
+        },
+        "moduleArea": {
+          "type": "string",
+          "enum": ["general", "heart", "diabetes", "breast-cancer", "datasets", "performance"]
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120
+        },
+        "message": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 1500
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "reviewed", "resolved"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "userDisplayName",
+        "category",
+        "moduleArea",
+        "subject",
+        "message",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Owner-isolated profile for authenticated learners."
+    },
+    "/users/{userId}/predictions/{predictionId}": {
+      "schema": { "$ref": "#/entities/PredictionRecord" },
+      "description": "Per-user isolated history of educational disease prediction runs."
+    },
+    "/feedback/{feedbackId}": {
+      "schema": { "$ref": "#/entities/FeedbackEntry" },
+      "description": "Submitted user comments, suggestions, and issue reports for review."
+    }
+  }
+}

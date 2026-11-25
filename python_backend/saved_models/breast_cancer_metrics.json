@@ -1,0 +1,64 @@
+{
+  "diseaseId": "breast-cancer",
+  "modelName": "Breast Cancer Classifier",
+  "algorithm": "LogisticRegression(C=1.0)",
+  "plannedAlgorithm": "LogisticRegression(C=1.0)",
+  "endpointPath": "/api/predict/breast-cancer",
+  "status": "connected_sklearn",
+  "statusLabel": "Trained Scikit-learn Pipeline (LogisticRegression(C=1.0))",
+  "accuracy": 0.9298,
+  "precision": 0.8864,
+  "recall": 0.9286,
+  "f1Score": 0.907,
+  "rocAuc": 0.9841,
+  "confusionMatrix": {
+    "truePositive": 39,
+    "falsePositive": 5,
+    "falseNegative": 3,
+    "trueNegative": 67
+  },
+  "trainRows": 455,
+  "testRows": 114,
+  "totalRows": 569,
+  "positiveTestCount": 42,
+  "negativeTestCount": 72,
+  "cvRocAucMean": 0.9852,
+  "cvRocAucStd": 0.0058,
+  "candidateCvRocAuc": {
+    "CalibratedSVC(RBF, C=1.0)": 0.9849,
+    "LogisticRegression(C=1.0)": 0.9852,
+    "RandomForestClassifier(n=250, depth=6)": 0.9827
+  },
+  "pipelineSteps": [
+    "SimpleImputer(median)",
+    "StandardScaler()",
+    "LogisticRegression(C=1.0)"
+  ],
+  "splitStrategy": "Stratified 80/20 Train-Test Split (random_state=42)",
+  "datasetSource": "Wisconsin Diagnostic Breast Cancer (WDBC) Dataset (10 Mean Nuclei Features)",
+  "featureOrder": [
+    "meanRadius",
+    "meanTexture",
+    "meanPerimeter",
+    "meanArea",
+    "meanSmoothness",
+    "meanCompactness",
+    "meanConcavity",
+    "meanConcavePoints",
+    "meanSymmetry",
+    "meanFractalDimension"
+  ],
+  "featureWeights": {
+    "meanRadius": 1.051805,
+    "meanTexture": 1.489859,
+    "meanPerimeter": 0.923671,
+    "meanArea": 1.220664,
+    "meanSmoothness": 1.144128,
+    "meanCompactness": -0.280386,
+    "meanConcavity": 0.880487,
+    "meanConcavePoints": 1.662483,
+    "meanSymmetry": 0.431303,
+    "meanFractalDimension": -0.412045
+  },
+  "trainedAtIso": "2026-11-25T08:09:26.030188+00:00"
+}

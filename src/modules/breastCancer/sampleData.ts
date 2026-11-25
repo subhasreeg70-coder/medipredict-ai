@@ -1,0 +1,66 @@
+import { DemoPreset, SampleRecord } from '../../types/ml';
+
+export const breastCancerPresets: DemoPreset[] = [
+  {
+    id: 'bc-benign',
+    name: 'Illustrative Benign-Pattern Profile',
+    description: 'Synthetic textbook nuclei profile with smaller radius, low concavity, and uniform contour.',
+    values: {
+      meanRadius: 11.4,
+      meanTexture: 15.8,
+      meanPerimeter: 73.5,
+      meanArea: 405,
+      meanSmoothness: 0.086,
+      meanCompactness: 0.065,
+      meanConcavity: 0.03,
+      meanConcavePoints: 0.018,
+      meanSymmetry: 0.165,
+      meanFractalDimension: 0.061,
+    },
+  },
+  {
+    id: 'bc-malignant',
+    name: 'Illustrative Malignant-Pattern Profile',
+    description: 'Synthetic textbook nuclei profile with larger area, higher concavity, and irregular concave points.',
+    values: {
+      meanRadius: 19.6,
+      meanTexture: 23.8,
+      meanPerimeter: 129.5,
+      meanArea: 1190,
+      meanSmoothness: 0.112,
+      meanCompactness: 0.195,
+      meanConcavity: 0.215,
+      meanConcavePoints: 0.117,
+      meanSymmetry: 0.21,
+      meanFractalDimension: 0.066,
+    },
+  },
+];
+
+// Synthetic educational rows modeled after WDBC mean nuclei schema (zero real patient records)
+export const breastCancerSampleRecords: SampleRecord[] = [
+  { id: 'WBC-SYN-001', profileLabel: 'Synthetic Sample 01', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 11.2, meanTexture: 15.2, meanPerimeter: 72.0, meanArea: 392, meanSmoothness: 0.084, meanCompactness: 0.062, meanConcavity: 0.024, meanConcavePoints: 0.016, meanSymmetry: 0.162, meanFractalDimension: 0.060 } },
+  { id: 'WBC-SYN-002', profileLabel: 'Synthetic Sample 02', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 19.8, meanTexture: 24.1, meanPerimeter: 131.0, meanArea: 1220, meanSmoothness: 0.114, meanCompactness: 0.198, meanConcavity: 0.220, meanConcavePoints: 0.122, meanSymmetry: 0.210, meanFractalDimension: 0.066 } },
+  { id: 'WBC-SYN-003', profileLabel: 'Synthetic Sample 03', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 12.6, meanTexture: 17.4, meanPerimeter: 81.0, meanArea: 495, meanSmoothness: 0.090, meanCompactness: 0.078, meanConcavity: 0.042, meanConcavePoints: 0.026, meanSymmetry: 0.172, meanFractalDimension: 0.062 } },
+  { id: 'WBC-SYN-004', profileLabel: 'Synthetic Sample 04', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 17.9, meanTexture: 22.6, meanPerimeter: 118.5, meanArea: 995, meanSmoothness: 0.108, meanCompactness: 0.168, meanConcavity: 0.184, meanConcavePoints: 0.098, meanSymmetry: 0.198, meanFractalDimension: 0.065 } },
+  { id: 'WBC-SYN-005', profileLabel: 'Synthetic Sample 05', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 10.4, meanTexture: 14.6, meanPerimeter: 67.5, meanArea: 336, meanSmoothness: 0.082, meanCompactness: 0.054, meanConcavity: 0.019, meanConcavePoints: 0.012, meanSymmetry: 0.158, meanFractalDimension: 0.061 } },
+  { id: 'WBC-SYN-006', profileLabel: 'Synthetic Sample 06', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 21.4, meanTexture: 26.2, meanPerimeter: 142.0, meanArea: 1410, meanSmoothness: 0.118, meanCompactness: 0.224, meanConcavity: 0.256, meanConcavePoints: 0.138, meanSymmetry: 0.216, meanFractalDimension: 0.067 } },
+  { id: 'WBC-SYN-007', profileLabel: 'Synthetic Sample 07', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 13.1, meanTexture: 18.1, meanPerimeter: 84.5, meanArea: 532, meanSmoothness: 0.092, meanCompactness: 0.084, meanConcavity: 0.048, meanConcavePoints: 0.030, meanSymmetry: 0.175, meanFractalDimension: 0.062 } },
+  { id: 'WBC-SYN-008', profileLabel: 'Synthetic Sample 08', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 18.6, meanTexture: 23.0, meanPerimeter: 124.0, meanArea: 1085, meanSmoothness: 0.110, meanCompactness: 0.180, meanConcavity: 0.195, meanConcavePoints: 0.108, meanSymmetry: 0.204, meanFractalDimension: 0.064 } },
+  { id: 'WBC-SYN-009', profileLabel: 'Synthetic Sample 09', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 11.9, meanTexture: 16.5, meanPerimeter: 76.5, meanArea: 440, meanSmoothness: 0.088, meanCompactness: 0.070, meanConcavity: 0.033, meanConcavePoints: 0.021, meanSymmetry: 0.168, meanFractalDimension: 0.061 } },
+  { id: 'WBC-SYN-010', profileLabel: 'Synthetic Sample 10', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 20.5, meanTexture: 25.4, meanPerimeter: 136.0, meanArea: 1305, meanSmoothness: 0.116, meanCompactness: 0.210, meanConcavity: 0.238, meanConcavePoints: 0.129, meanSymmetry: 0.212, meanFractalDimension: 0.067 } },
+  { id: 'WBC-SYN-011', profileLabel: 'Synthetic Sample 11', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 9.8, meanTexture: 13.9, meanPerimeter: 63.0, meanArea: 298, meanSmoothness: 0.079, meanCompactness: 0.049, meanConcavity: 0.015, meanConcavePoints: 0.009, meanSymmetry: 0.152, meanFractalDimension: 0.060 } },
+  { id: 'WBC-SYN-012', profileLabel: 'Synthetic Sample 12', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 22.8, meanTexture: 27.6, meanPerimeter: 151.0, meanArea: 1610, meanSmoothness: 0.122, meanCompactness: 0.242, meanConcavity: 0.281, meanConcavePoints: 0.149, meanSymmetry: 0.224, meanFractalDimension: 0.069 } },
+  { id: 'WBC-SYN-013', profileLabel: 'Synthetic Sample 13', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 12.2, meanTexture: 16.9, meanPerimeter: 78.2, meanArea: 462, meanSmoothness: 0.089, meanCompactness: 0.073, meanConcavity: 0.037, meanConcavePoints: 0.023, meanSymmetry: 0.170, meanFractalDimension: 0.062 } },
+  { id: 'WBC-SYN-014', profileLabel: 'Synthetic Sample 14', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 17.2, meanTexture: 21.8, meanPerimeter: 113.4, meanArea: 920, meanSmoothness: 0.105, meanCompactness: 0.156, meanConcavity: 0.168, meanConcavePoints: 0.089, meanSymmetry: 0.194, meanFractalDimension: 0.064 } },
+  { id: 'WBC-SYN-015', profileLabel: 'Synthetic Sample 15', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 13.4, meanTexture: 18.6, meanPerimeter: 86.2, meanArea: 554, meanSmoothness: 0.094, meanCompactness: 0.089, meanConcavity: 0.052, meanConcavePoints: 0.032, meanSymmetry: 0.177, meanFractalDimension: 0.062 } },
+  { id: 'WBC-SYN-016', profileLabel: 'Synthetic Sample 16', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 19.1, meanTexture: 23.5, meanPerimeter: 127.0, meanArea: 1140, meanSmoothness: 0.111, meanCompactness: 0.188, meanConcavity: 0.205, meanConcavePoints: 0.114, meanSymmetry: 0.206, meanFractalDimension: 0.065 } },
+  { id: 'WBC-SYN-017', profileLabel: 'Synthetic Sample 17', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 10.9, meanTexture: 14.8, meanPerimeter: 70.1, meanArea: 368, meanSmoothness: 0.083, meanCompactness: 0.058, meanConcavity: 0.021, meanConcavePoints: 0.014, meanSymmetry: 0.160, meanFractalDimension: 0.061 } },
+  { id: 'WBC-SYN-018', profileLabel: 'Synthetic Sample 18', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 18.2, meanTexture: 22.2, meanPerimeter: 121.0, meanArea: 1035, meanSmoothness: 0.109, meanCompactness: 0.172, meanConcavity: 0.189, meanConcavePoints: 0.102, meanSymmetry: 0.201, meanFractalDimension: 0.065 } },
+  { id: 'WBC-SYN-019', profileLabel: 'Synthetic Sample 19', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 11.6, meanTexture: 16.0, meanPerimeter: 74.8, meanArea: 418, meanSmoothness: 0.087, meanCompactness: 0.067, meanConcavity: 0.030, meanConcavePoints: 0.019, meanSymmetry: 0.166, meanFractalDimension: 0.061 } },
+  { id: 'WBC-SYN-020', profileLabel: 'Synthetic Sample 20', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 20.1, meanTexture: 24.8, meanPerimeter: 133.5, meanArea: 1265, meanSmoothness: 0.115, meanCompactness: 0.204, meanConcavity: 0.229, meanConcavePoints: 0.125, meanSymmetry: 0.211, meanFractalDimension: 0.066 } },
+  { id: 'WBC-SYN-021', profileLabel: 'Synthetic Sample 21', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 12.8, meanTexture: 17.8, meanPerimeter: 82.4, meanArea: 510, meanSmoothness: 0.091, meanCompactness: 0.081, meanConcavity: 0.044, meanConcavePoints: 0.028, meanSymmetry: 0.173, meanFractalDimension: 0.062 } },
+  { id: 'WBC-SYN-022', profileLabel: 'Synthetic Sample 22', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 16.8, meanTexture: 21.4, meanPerimeter: 110.2, meanArea: 880, meanSmoothness: 0.104, meanCompactness: 0.148, meanConcavity: 0.154, meanConcavePoints: 0.082, meanSymmetry: 0.191, meanFractalDimension: 0.064 } },
+  { id: 'WBC-SYN-023', profileLabel: 'Synthetic Sample 23', target: 0, targetLabel: 'Benign (0)', features: { meanRadius: 11.4, meanTexture: 15.6, meanPerimeter: 73.4, meanArea: 402, meanSmoothness: 0.085, meanCompactness: 0.064, meanConcavity: 0.027, meanConcavePoints: 0.017, meanSymmetry: 0.164, meanFractalDimension: 0.061 } },
+  { id: 'WBC-SYN-024', profileLabel: 'Synthetic Sample 24', target: 1, targetLabel: 'Malignant (1)', features: { meanRadius: 21.9, meanTexture: 26.8, meanPerimeter: 145.5, meanArea: 1480, meanSmoothness: 0.120, meanCompactness: 0.231, meanConcavity: 0.268, meanConcavePoints: 0.142, meanSymmetry: 0.219, meanFractalDimension: 0.068 } },
+];

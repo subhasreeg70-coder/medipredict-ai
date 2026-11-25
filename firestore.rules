@@ -1,0 +1,149 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global safety net: default deny everything
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+
+    function isValidUserProfile(data, userId) {
+      return data.keys().hasAll(['uid', 'displayName', 'email', 'role', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'displayName', 'email', 'role', 'createdAt', 'updatedAt'])
+        && data.uid is string && data.uid == userId && isValidId(data.uid)
+        && data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 80
+        && data.email is string && data.email.size() >= 3 && data.email.size() <= 160
+        && data.role is string && data.role == 'learner'
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidPredictionRecord(data, userId, predictionId) {
+      return data.keys().hasAll([
+          'id', 'userId', 'diseaseId', 'predictedClass', 'predictedLabel',
+          'probability', 'riskTier', 'source', 'isTrainedModel', 'inputsSummary', 'createdAt'
+        ])
+        && data.keys().hasOnly([
+          'id', 'userId', 'diseaseId', 'predictedClass', 'predictedLabel',
+          'probability', 'riskTier', 'source', 'isTrainedModel', 'inputsSummary', 'createdAt'
+        ])
+        && data.id is string && data.id == predictionId && isValidId(data.id)
+        && data.userId is string && data.userId == userId && isValidId(data.userId)
+        && data.diseaseId is string && data.diseaseId in ['heart', 'diabetes', 'breast-cancer']
+        && data.predictedClass is int && data.predictedClass in [0, 1]
+        && data.predictedLabel is string && data.predictedLabel.size() >= 1 && data.predictedLabel.size() <= 120
+        && data.probability is number && data.probability >= 0 && data.probability <= 1
+        && data.riskTier is string && data.riskTier.size() >= 1 && data.riskTier.size() <= 80
+        && data.source is string && data.source in ['educational_demo_simulator', 'python_sklearn_api']
+        && data.isTrainedModel is bool
+        && data.inputsSummary is map && data.inputsSummary.keys().size() >= 1 && data.inputsSummary.keys().size() <= 20
+        && data.createdAt is timestamp;
+    }
+
+    function isValidFeedbackEntry(data, feedbackId) {
+      return data.keys().hasAll([
+          'id', 'userId', 'userDisplayName', 'category', 'moduleArea',
+          'subject', 'message', 'status', 'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'id', 'userId', 'userDisplayName', 'category', 'moduleArea',
+          'subject', 'message', 'status', 'createdAt', 'updatedAt'
+        ])
+        && data.id is string && data.id == feedbackId && isValidId(data.id)
+        && data.userId is string && isValidId(data.userId)
+        && data.userDisplayName is string && data.userDisplayName.size() >= 1 && data.userDisplayName.size() <= 80
+        && data.category is string && data.category in ['comment', 'suggestion', 'issue']
+        && data.moduleArea is string && data.moduleArea in ['general', 'heart', 'diabetes', 'breast-cancer', 'datasets', 'performance']
+        && data.subject is string && data.subject.size() >= 3 && data.subject.size() <= 120
+        && data.message is string && data.message.size() >= 5 && data.message.size() <= 1500
+        && data.status is string && data.status in ['new', 'reviewed', 'resolved']
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow list: if isAdmin();
+      allow create: if isValidId(userId)
+        && isOwner(userId)
+        && isValidUserProfile(incoming(), userId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(userId)
+        && isOwner(userId)
+        && isValidUserProfile(incoming(), userId)
+        && incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'updatedAt'])
+        && incoming().uid == existing().uid
+        && incoming().email == existing().email
+        && incoming().role == existing().role
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time;
+      allow delete: if false;
+
+      match /predictions/{predictionId} {
+        allow get: if isValidId(userId) && isValidId(predictionId) && (isOwner(userId) || isAdmin());
+        allow list: if isValidId(userId) && (isOwner(userId) || isAdmin());
+        allow create: if isValidId(userId)
+          && isValidId(predictionId)
+          && isOwner(userId)
+          && isValidPredictionRecord(incoming(), userId, predictionId)
+          && incoming().createdAt == request.time
+          && exists(/databases/$(database)/documents/users/$(userId));
+        allow update: if false;
+        allow delete: if isValidId(userId) && isValidId(predictionId) && isOwner(userId);
+      }
+    }
+
+    match /feedback/{feedbackId} {
+      allow get: if isValidId(feedbackId) && (
+        isAdmin() || (isSignedIn() && existing().userId == request.auth.uid)
+      );
+      allow list: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create: if isValidId(feedbackId)
+        && isSignedIn()
+        && isValidFeedbackEntry(incoming(), feedbackId)
+        && incoming().userId == request.auth.uid
+        && incoming().status == 'new'
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(feedbackId)
+        && isAdmin()
+        && isValidFeedbackEntry(incoming(), feedbackId)
+        && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt'])
+        && incoming().id == existing().id
+        && incoming().userId == existing().userId
+        && incoming().userDisplayName == existing().userDisplayName
+        && incoming().category == existing().category
+        && incoming().moduleArea == existing().moduleArea
+        && incoming().subject == existing().subject
+        && incoming().message == existing().message
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time;
+      allow delete: if isValidId(feedbackId) && (isAdmin() || (isSignedIn() && existing().userId == request.auth.uid));
+    }
+  }
+}

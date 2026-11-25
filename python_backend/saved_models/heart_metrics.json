@@ -1,0 +1,70 @@
+{
+  "diseaseId": "heart",
+  "modelName": "Heart Disease Classifier",
+  "algorithm": "LogisticRegression(C=0.5)",
+  "plannedAlgorithm": "LogisticRegression(C=0.5)",
+  "endpointPath": "/api/predict/heart",
+  "status": "connected_sklearn",
+  "statusLabel": "Trained Scikit-learn Pipeline (LogisticRegression(C=0.5))",
+  "accuracy": 0.9016,
+  "precision": 0.8667,
+  "recall": 0.9286,
+  "f1Score": 0.8966,
+  "rocAuc": 0.9535,
+  "confusionMatrix": {
+    "truePositive": 26,
+    "falsePositive": 4,
+    "falseNegative": 2,
+    "trueNegative": 29
+  },
+  "trainRows": 242,
+  "testRows": 61,
+  "totalRows": 303,
+  "positiveTestCount": 28,
+  "negativeTestCount": 33,
+  "cvRocAucMean": 0.9003,
+  "cvRocAucStd": 0.0161,
+  "candidateCvRocAuc": {
+    "LogisticRegression(C=0.5)": 0.9003,
+    "RandomForestClassifier(n=250, depth=5)": 0.8883,
+    "GradientBoostingClassifier(n=120, lr=0.05)": 0.8555
+  },
+  "pipelineSteps": [
+    "SimpleImputer(median)",
+    "StandardScaler()",
+    "LogisticRegression(C=0.5)"
+  ],
+  "splitStrategy": "Stratified 80/20 Train-Test Split (random_state=42)",
+  "datasetSource": "UCI Cleveland Heart Disease Dataset (processed.cleveland.data)",
+  "featureOrder": [
+    "age",
+    "sex",
+    "cp",
+    "trestbps",
+    "chol",
+    "fbs",
+    "restecg",
+    "thalach",
+    "exang",
+    "oldpeak",
+    "slope",
+    "ca",
+    "thal"
+  ],
+  "featureWeights": {
+    "age": -0.050692,
+    "sex": 0.752158,
+    "cp": 0.558587,
+    "trestbps": 0.30383,
+    "chol": 0.19804,
+    "fbs": -0.17014,
+    "restecg": 0.190543,
+    "thalach": -0.3829,
+    "exang": 0.392105,
+    "oldpeak": 0.18526,
+    "slope": -0.4013,
+    "ca": 1.053281,
+    "thal": 0.548488
+  },
+  "trainedAtIso": "2026-11-25T08:09:22.894823+00:00"
+}

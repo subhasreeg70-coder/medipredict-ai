@@ -1,0 +1,60 @@
+{
+  "diseaseId": "diabetes",
+  "modelName": "Diabetes Classifier",
+  "algorithm": "LogisticRegression(C=1.0)",
+  "plannedAlgorithm": "LogisticRegression(C=1.0)",
+  "endpointPath": "/api/predict/diabetes",
+  "status": "connected_sklearn",
+  "statusLabel": "Trained Scikit-learn Pipeline (LogisticRegression(C=1.0))",
+  "accuracy": 0.7078,
+  "precision": 0.6,
+  "recall": 0.5,
+  "f1Score": 0.5455,
+  "rocAuc": 0.813,
+  "confusionMatrix": {
+    "truePositive": 27,
+    "falsePositive": 18,
+    "falseNegative": 27,
+    "trueNegative": 82
+  },
+  "trainRows": 614,
+  "testRows": 154,
+  "totalRows": 768,
+  "positiveTestCount": 54,
+  "negativeTestCount": 100,
+  "cvRocAucMean": 0.8434,
+  "cvRocAucStd": 0.0185,
+  "candidateCvRocAuc": {
+    "LogisticRegression(C=1.0)": 0.8434,
+    "GradientBoostingClassifier(n=150, lr=0.04)": 0.8234,
+    "RandomForestClassifier(n=250, depth=6)": 0.8366
+  },
+  "pipelineSteps": [
+    "SimpleImputer(median)",
+    "StandardScaler()",
+    "LogisticRegression(C=1.0)"
+  ],
+  "splitStrategy": "Stratified 80/20 Train-Test Split (random_state=42)",
+  "datasetSource": "Pima Indians Diabetes Dataset (NIDDK / UCI Benchmark)",
+  "featureOrder": [
+    "pregnancies",
+    "glucose",
+    "bloodPressure",
+    "skinThickness",
+    "insulin",
+    "bmi",
+    "dpf",
+    "age"
+  ],
+  "featureWeights": {
+    "pregnancies": 0.377446,
+    "glucose": 1.182567,
+    "bloodPressure": -0.044111,
+    "skinThickness": 0.028321,
+    "insulin": -0.066119,
+    "bmi": 0.688652,
+    "dpf": 0.233337,
+    "age": 0.147794
+  },
+  "trainedAtIso": "2026-11-25T08:09:24.738125+00:00"
+}

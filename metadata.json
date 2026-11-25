@@ -1,0 +1,6 @@
+{
+  "name": "MEDIPREDICT AI",
+  "description": "Educational healthcare machine learning dashboard for exploring Heart Disease, Diabetes, and Breast Cancer prediction workflows, datasets, and Scikit-learn evaluation concepts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

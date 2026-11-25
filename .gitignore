@@ -1,0 +1,13 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+python_backend/.venv/
+python_backend/__pycache__/
+python_backend/**/__pycache__/
+.pytest_cache/
+
